@@ -11,24 +11,6 @@ import org.jetbrains.annotations.NotNull;
 public class EventListener extends ListenerAdapter {
 
     @Override
-    public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
-        User user = event.getUser();
-        String emoji = event.getReaction().getEmoji().getAsReactionCode();
-        String channelMention = event.getChannel().getAsMention();
-
-        String message = user.getAsTag() + " reacted to a message with " + emoji + " in the " + channelMention + " channel!";
-        event.getGuild().getTextChannelsByName("bot-channel", true).get(0).sendMessage(message).queue();
-    }
-
-    @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String message = event.getMessage().getContentRaw();
-        if (message.equals("ping")) {
-            event.getChannel().sendMessage("pong").queue();
-        }
-    }
-
-    @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         Role welcomeRole = event.getGuild().getRoleById(1166341224190443590L);
         Role botRole = event.getGuild().getRoleById(1L);
