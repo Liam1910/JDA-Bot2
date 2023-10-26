@@ -13,10 +13,10 @@ public class EventListener extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         Role welcomeRole = event.getGuild().getRoleById(1166341224190443590L);
-        Role botRole = event.getGuild().getRoleById(1L);
+        Role botRole = event.getGuild().getRoleById(1167040088342012015L);
 
         if (event.getUser().isBot()) {
-
+            event.getGuild().addRoleToMember(event.getUser(), botRole).queue();
         }
         else if (welcomeRole != null) {
             event.getGuild().addRoleToMember(event.getMember(), welcomeRole).queue();
