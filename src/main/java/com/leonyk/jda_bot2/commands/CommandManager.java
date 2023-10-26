@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leonyk.functions.BadLangCheck.BadLanguageCheck;
+import static com.leonyk.functions.Util.*;
 
 public class CommandManager extends ListenerAdapter {
 
@@ -75,12 +75,16 @@ public class CommandManager extends ListenerAdapter {
                 Role admin = event.getGuild().getRoleById(1167031036618756116L);
                 Role owner = event.getGuild().getRoleById(1167031551935139850L);
 
-                if (runner.getRoles().contains(admin)) {
-                    event.getGuild().addRoleToMember(user, role).queue();
-                    event.reply("The Role " + role.getAsMention() + " has been added to the User " + user.getAsMention() + "!").setEphemeral(true).queue();
+                if (role.equals(owner)) {
+                    if (runner.getRoles().contains(owner)) {
+                        addRole(event, user, role);
+                    } else {
+                        event.reply("The Role " + owner.getAsMention() + " cant be given to User " + user.getAsMention() + " because you (" + runner.getAsMention() + ") do not have the Owner Role/Permissions!").setEphemeral(true).queue();
+                    }
+                } else if (runner.getRoles().contains(admin)) {
+                    addRole(event, user, role);
                 } else if (runner.getRoles().contains(owner)) {
-                    event.getGuild().addRoleToMember(user, role).queue();
-                    event.reply("The Role " + role.getAsMention() + " has been added to the User " + user.getAsMention() + "!").setEphemeral(true).queue();
+                    addRole(event, user, role);
                 } else {
                     event.reply("You have to be at least an Administrator ( " + admin.getAsMention() + ") to run this command").setEphemeral(true).queue();
                 }
@@ -97,12 +101,16 @@ public class CommandManager extends ListenerAdapter {
                 Role admin = event.getGuild().getRoleById(1167031036618756116L);
                 Role owner = event.getGuild().getRoleById(1167031551935139850L);
 
-                if (runner.getRoles().contains(admin)) {
-                    event.getGuild().removeRoleFromMember(user, role).queue();
-                    event.reply("The Role " + role.getAsMention() + " has been removed from the User " + user.getAsMention() + "!").setEphemeral(true).queue();
+                if (role.equals(owner)) {
+                    if (runner.getRoles().contains(owner)) {
+                        removeRole(event, user, role);
+                    } else {
+                        event.reply("The Role " + owner.getAsMention() + " cant be removed from User " + user.getAsMention() + " because you (" + runner.getAsMention() + ") do not have the Owner Role/Permissions!").setEphemeral(true).queue();
+                    }
+                } else if (runner.getRoles().contains(admin)) {
+                    removeRole(event, user, role);
                 } else if (runner.getRoles().contains(owner)) {
-                    event.getGuild().removeRoleFromMember(user, role).queue();
-                    event.reply("The Role " + role.getAsMention() + " has been removed from the User " + user.getAsMention() + "!").setEphemeral(true).queue();
+                    removeRole(event, user, role);
                 } else {
                     event.reply("You have to be at least an Administrator ( " + admin.getAsMention() + ") to run this command").setEphemeral(true).queue();
                 }
