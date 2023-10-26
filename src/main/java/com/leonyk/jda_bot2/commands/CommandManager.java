@@ -1,9 +1,6 @@
 package com.leonyk.jda_bot2.commands;
 
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -16,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leonyk.functions.BadLangCheck.BadLanguageCheck;
 
 public class CommandManager extends ListenerAdapter {
 
@@ -38,6 +37,7 @@ public class CommandManager extends ListenerAdapter {
         else if (command.equals("say")) {
             OptionMapping messageOption = event.getOption("message");
             String message = messageOption.getAsString();
+            Boolean sendReply = true;
 
             MessageChannel channel;
             OptionMapping channelOption = event.getOption("channel");
@@ -48,8 +48,16 @@ public class CommandManager extends ListenerAdapter {
                 channel = event.getChannel();
             }
 
-            channel.sendMessage(message).queue();
-            event.reply("Your message was send!").setEphemeral(true).queue();
+            if (BadLanguageCheck(messageOption.getAsString())) {
+                String msg = "There is a bad word in the sentence, not gonna say it!";
+                event.reply(msg).setEphemeral(true).queue();
+                sendReply = false;
+            }
+
+            if (sendReply) {
+                channel.sendMessage(message).queue();
+                event.reply("Your message was send!").setEphemeral(true).queue();
+            }
         }
         else if (command.equals("hug")) {
             OptionMapping userOption = event.getOption("user");
@@ -57,6 +65,22 @@ public class CommandManager extends ListenerAdapter {
             User sender = event.getUser();
 
             event.reply("Awww, " + sender.getAsMention() + " hugged " + user.getAsMention() + " , what a cute gesture :people_hugging:").queue();
+        }
+        else if (command.equals("add_role")) {
+            OptionMapping roleOption = event.getOption("role");
+            OptionMapping userOption = event.getOption("role.user");
+
+            Role role = roleOption.getAsRole();
+            User user = userOption.getAsUser();
+            Member runner = event.getMember();
+            Long admin = 1167031036618756116L;
+
+            if (runner.getRoles().contains(admin)) {
+                event.getGuild().addRoleToMember(user, role);
+                event.reply("Role " + role.getAsMention() + " has been added to the user " + user.getAsMention() + "!").setEphemeral(true).queue();
+            } else {
+                event.reply("You have to be an Administrator (@Admin) to run this command").setEphemeral(true).queue();
+            }
         }
     }
 
@@ -67,12 +91,14 @@ public class CommandManager extends ListenerAdapter {
         OptionData say_message = new OptionData(OptionType.STRING, "message", "The message you want the bot to say", true);
         OptionData say_channel = new OptionData(OptionType.CHANNEL, "channel", "Sends the message into a specific channel", false).setChannelTypes(ChannelType.TEXT, ChannelType.NEWS, ChannelType.GUILD_PUBLIC_THREAD);
         OptionData hug_person = new OptionData(OptionType.USER, "user", "The person that you want to express youre emotions to", true);
+        OptionData add_role_user = new OptionData(OptionType.USER, "role.user", "The person that gets the role", true);
+        OptionData add_role_role = new OptionData(OptionType.ROLE, "role", "The role that the person gets", true);
 
         commandData.add(Commands.slash("welcome", "Get welcomed by the Bot"));
         commandData.add(Commands.slash("roles", "Displays all roles on the server"));
         commandData.add(Commands.slash("say", "Make the bot say a message").addOptions(say_message, say_channel));
         commandData.add(Commands.slash("hug", "hug a person").addOptions(hug_person));
-
+        commandData.add(Commands.slash("add_role", "Ads a role to a user").addOptions(add_role_role, add_role_user));
 
         return commandData;
     }
@@ -91,8 +117,8 @@ public class CommandManager extends ListenerAdapter {
      * // Register server specific commands
      *
      *                                     SERVER_ID
-     * if (event.getGuild().getIdLong() == 1234567890L {
-     *   event.getGuild().updateCommands().addCommands(specialCommands()).queue();
+     * if (event.getGuild().getIdLong() == 123456789L {
+     *   event.getGuild().updateCommands().addCommands(ListOfSpecialCommands()).queue();
      * }
      */
 
