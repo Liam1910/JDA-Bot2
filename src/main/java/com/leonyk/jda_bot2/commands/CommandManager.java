@@ -22,10 +22,6 @@ public class CommandManager extends ListenerAdapter {
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         String command = event.getName();
         switch (command) {
-            case "welcome":
-                String userTag = event.getUser().getAsTag();
-                event.reply("Welcome to the Server, **" + userTag + "**!").setEphemeral(true).queue();
-                break;
             case "roles":
                 String response = "";
                 for (Role role : event.getGuild().getRoles()) {
@@ -127,7 +123,6 @@ public class CommandManager extends ListenerAdapter {
         OptionData remove_role_user = new OptionData(OptionType.USER, "rem_role_user", "The person that gets the role remove", true);
         OptionData remove_role_role = new OptionData(OptionType.ROLE, "rem_role", "The role that the person gets removed", true);
 
-        commandData.add(Commands.slash("welcome", "Get welcomed by the Bot"));
         commandData.add(Commands.slash("roles", "Displays all roles on the server"));
         commandData.add(Commands.slash("say", "Make the bot say a message").addOptions(say_message, say_channel));
         commandData.add(Commands.slash("hug", "hug a person").addOptions(hug_person));
