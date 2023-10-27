@@ -24,20 +24,20 @@ public class JDA_Bot {
     public JDA_Bot() throws LoginException {
         config = Dotenv.configure().ignoreIfMissing().load();
         String token = config.get("TOKEN");
-        String token_admin_commands = config.get("TOKEN");
+        String token_admin_commands = config.get("TOKEN_ADMIN_COMMANDS");
 
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         DefaultShardManagerBuilder builder_admin_commands = DefaultShardManagerBuilder.createDefault(token_admin_commands);
 
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setActivity(Activity.watching("SaikedeLeon on Twitch (twitch.tv/saikedeleon)"));
+        //builder.setActivity(Activity.watching("SaikedeLeon on Twitch (twitch.tv/saikedeleon)"));
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_PRESENCES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_BANS);
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableCache(CacheFlag.ONLINE_STATUS);
 
         builder_admin_commands.setStatus(OnlineStatus.ONLINE);
-        builder_admin_commands.setActivity(Activity.watching("SaikedeLeon on Twitch (twitch.tv/saikedeleon)"));
+        //builder_admin_commands.setActivity(Activity.watching("SaikedeLeon on Twitch (twitch.tv/saikedeleon)"));
         builder_admin_commands.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_PRESENCES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_BANS);
         builder_admin_commands.setMemberCachePolicy(MemberCachePolicy.ALL);
         builder_admin_commands.setChunkingFilter(ChunkingFilter.ALL);
