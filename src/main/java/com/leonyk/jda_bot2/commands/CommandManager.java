@@ -67,6 +67,17 @@ public class CommandManager extends ListenerAdapter {
                 event.reply("Aww, " + sender.getAsMention() + " hugged " + user.getAsMention() + " , what a cute gesture :people_hugging:").queue();
                 break;
             }
+            case "idea": {
+                OptionMapping ideaOption = event.getOption("idea");
+                String idea = ideaOption.getAsString();
+
+                User runner = event.getUser();
+
+                addToFile(idea + " (" + runner.getAsTag() + ")");
+
+                event.reply("Your idea has been added to a list, i will try to make it possible...").setEphemeral(true).queue();
+                break;
+            }
         }
     }
 
@@ -77,10 +88,12 @@ public class CommandManager extends ListenerAdapter {
         OptionData say_message = new OptionData(OptionType.STRING, "message", "The message you want the bot to say", true);
         OptionData say_channel = new OptionData(OptionType.CHANNEL, "channel", "Sends the message into a specific channel", false).setChannelTypes(ChannelType.TEXT, ChannelType.NEWS, ChannelType.GUILD_PUBLIC_THREAD);
         OptionData hug_person = new OptionData(OptionType.USER, "user", "The User that you want to express you're emotions to", true);
+        OptionData idea = new OptionData(OptionType.STRING, "idea", "The idea", true);
 
         commandData.add(Commands.slash("roles", "Displays all roles on the server"));
         commandData.add(Commands.slash("say", "Make the bot say a message").addOptions(say_message, say_channel));
         commandData.add(Commands.slash("hug", "hug a person").addOptions(hug_person));
+        commandData.add(Commands.slash("idea", "Give us an idea on what to add to the Bot!").addOptions(idea));
 
         return commandData;
     }

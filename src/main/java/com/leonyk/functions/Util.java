@@ -6,6 +6,10 @@ import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +50,19 @@ public class Util {
     public static void removeRole(SlashCommandInteractionEvent event, User user, Role role) {
         event.getGuild().removeRoleFromMember(user, role).queue();
         event.reply("The Role " + role.getAsMention() + " has been removed from the User " + user.getAsMention() + "!").setEphemeral(true).queue();
+    }
+
+    public static void addToFile(String text) {
+        try {
+            File file = new File("/home/liam/IdeaProjects/JDA-Bot2/src/main/resources/ideas.txt");
+
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(text + "\n");
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

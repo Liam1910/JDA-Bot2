@@ -20,16 +20,16 @@ public class EventListener extends ListenerAdapter {
             event.getGuild().addRoleToMember(event.getMember(), welcomeRole).queue();
         }
 
-        event.getGuild().getTextChannelsByName("welcome", true).get(0).sendMessage("Welcome to the Server, " + event.getMember().getAsMention() + "!").queue();
+        //event.getGuild().getTextChannelsByName("welcome", true).get(0).sendMessage("Welcome to the Server, " + event.getMember().getAsMention() + "!").queue();
     }
 
-    @Override
-    public void onUserUpdateOnlineStatus(@NotNull UserUpdateOnlineStatusEvent event) {
-        User user = event.getUser();
-        if (!user.isBot()) {
-            String message = "**" + user.getAsTag() + "** updated their status to " + event.getNewOnlineStatus().getKey() + "!";
-            event.getGuild().getTextChannelsByName("bot-channel", true).get(0).sendMessage(message).queue();
-        }
-    }
+    //@Override
+    //public void onUserUpdateOnlineStatus(@NotNull UserUpdateOnlineStatusEvent event) {
+    //    User user = event.getUser();
+    //    if (!user.isBot()) {
+    //        String message = "**" + user.getAsTag() + "** updated their status to " + event.getNewOnlineStatus().getKey() + "!";
+    //        event.getGuild().getTextChannelsByName("bot-channel", true).get(0).sendMessage(message).queue();
+    //    }
+    //}
 }
 
