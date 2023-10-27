@@ -55,6 +55,9 @@ public class JDA_Bot {
     public ShardManager getShardManager() {
         return shardManager;
     }
+    public ShardManager getShardManager_AC() {
+        return shardManager_admin_commands;
+    }
     public Dotenv getConfig() {
         return config;
     }

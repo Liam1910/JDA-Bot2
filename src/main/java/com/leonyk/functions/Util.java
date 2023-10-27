@@ -2,7 +2,6 @@ package com.leonyk.functions;
 
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class Util {
 
-    public static List<String> badWords() {
+    private static List<String> badWords() {
         List<String> bad = new ArrayList<>();
 
         bad.add("negga");
@@ -52,9 +51,9 @@ public class Util {
         event.reply("The Role " + role.getAsMention() + " has been removed from the User " + user.getAsMention() + "!").setEphemeral(true).queue();
     }
 
-    public static void addToFile(String text) {
+    public static void addToFile(String text, String filePath) {
         try {
-            File file = new File("/home/liam/IdeaProjects/JDA-Bot2/src/main/resources/ideas.txt");
+            File file = new File(filePath);
 
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

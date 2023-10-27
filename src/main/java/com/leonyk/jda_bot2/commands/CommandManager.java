@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -73,7 +74,7 @@ public class CommandManager extends ListenerAdapter {
 
                 User runner = event.getUser();
 
-                addToFile(idea + " (" + runner.getAsTag() + ")");
+                addToFile(idea + " (" + runner.getAsTag() + ")", "/home/liam/IdeaProjects/JDA-Bot2/src/main/resources/ideas.txt");
 
                 event.reply("Your idea has been added to a list, i will try to make it possible...").setEphemeral(true).queue();
                 break;
@@ -103,10 +104,10 @@ public class CommandManager extends ListenerAdapter {
         event.getGuild().updateCommands().addCommands(commands()).queue();
     }
 
-    //@Override
-    //public void onGuildJoin(@NotNull GuildJoinEvent event) {
-    //    event.getGuild().updateCommands().addCommands(commands()).queue();
-    //}
+    @Override
+    public void onGuildJoin(@NotNull GuildJoinEvent event) {
+        event.getGuild().updateCommands().addCommands(commands()).queue();
+    }
 
     /*
      * // Register server specific commands

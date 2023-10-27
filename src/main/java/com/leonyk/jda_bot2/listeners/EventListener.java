@@ -2,7 +2,6 @@ package com.leonyk.jda_bot2.listeners;
 
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.user.update.UserUpdateOnlineStatusEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,14 +21,5 @@ public class EventListener extends ListenerAdapter {
 
         //event.getGuild().getTextChannelsByName("welcome", true).get(0).sendMessage("Welcome to the Server, " + event.getMember().getAsMention() + "!").queue();
     }
-
-    //@Override
-    //public void onUserUpdateOnlineStatus(@NotNull UserUpdateOnlineStatusEvent event) {
-    //    User user = event.getUser();
-    //    if (!user.isBot()) {
-    //        String message = "**" + user.getAsTag() + "** updated their status to " + event.getNewOnlineStatus().getKey() + "!";
-    //        event.getGuild().getTextChannelsByName("bot-channel", true).get(0).sendMessage(message).queue();
-    //    }
-    //}
 }
 
